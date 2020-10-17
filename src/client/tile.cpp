@@ -22,6 +22,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include <algorithm>
 #include <ICameraSceneNode.h>
 #include <IrrCompileConfig.h>
+#include "util/image_path.h"
 #include "util/string.h"
 #include "util/container.h"
 #include "util/thread.h"
@@ -47,70 +48,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 	A cache from texture name to texture path
 */
 MutexedMap<std::string, std::string> g_texturename_to_path_cache;
-
-/*
-	Replaces the filename extension.
-	eg:
-		std::string image = "a/image.png"
-		replace_ext(image, "jpg")
-		-> image = "a/image.jpg"
-	Returns true on success.
-*/
-static bool replace_ext(std::string &path, const char *ext)
-{
-	if (ext == NULL)
-		return false;
-	// Find place of last dot, fail if \ or / found.
-	s32 last_dot_i = -1;
-	for (s32 i=path.size()-1; i>=0; i--)
-	{
-		if (path[i] == '.')
-		{
-			last_dot_i = i;
-			break;
-		}
-
-		if (path[i] == '\\' || path[i] == '/')
-			break;
-	}
-	// If not found, return an empty string
-	if (last_dot_i == -1)
-		return false;
-	// Else make the new path
-	path = path.substr(0, last_dot_i+1) + ext;
-	return true;
-}
-
-/*
-	Find out the full path of an image by trying different filename
-	extensions.
-
-	If failed, return "".
-*/
-std::string getImagePath(std::string path)
-{
-	// A NULL-ended list of possible image extensions
-	const char *extensions[] = {
-		"png", "jpg", "bmp", "tga",
-		"pcx", "ppm", "psd", "wal", "rgb",
-		NULL
-	};
-	// If there is no extension, add one
-	if (removeStringEnd(path, extensions).empty())
-		path = path + ".png";
-	// Check paths until something is found to exist
-	const char **ext = extensions;
-	do{
-		bool r = replace_ext(path, *ext);
-		if (!r)
-			return "";
-		if (fs::PathExists(path))
-			return path;
-	}
-	while((++ext) != NULL);
-
-	return "";
-}
 
 /*
 	Gets the path to a texture by first checking if the texture exists
@@ -143,8 +80,8 @@ std::string getTexturePath(const std::string &filename, bool *is_base_pack)
 	for (const auto &path : getTextureDirs()) {
 		std::string testpath = path + DIR_DELIM;
 		testpath.append(filename);
-		// Check all filename extensions. Returns "" if not found.
-		fullpath = getImagePath(testpath);
+		// Check all filename extensions. Sets fullpath to "" if not found.
+		find_correct_image_extension(fullpath, testpath);
 		if (!fullpath.empty())
 			break;
 	}
@@ -157,8 +94,8 @@ std::string getTexturePath(const std::string &filename, bool *is_base_pack)
 		std::string base_path = porting::path_share + DIR_DELIM + "textures"
 				+ DIR_DELIM + "base" + DIR_DELIM + "pack";
 		std::string testpath = base_path + DIR_DELIM + filename;
-		// Check all filename extensions. Returns "" if not found.
-		fullpath = getImagePath(testpath);
+		// Check all filename extensions. Sets fullpath to "" if not found.
+		find_correct_image_extension(fullpath, testpath);
 		if (is_base_pack && !fullpath.empty())
 			*is_base_pack = true;
 	}

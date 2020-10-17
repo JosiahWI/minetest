@@ -28,7 +28,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "util/string.h"
 
 #ifndef SERVER
-#include "client/tile.h" // getImagePath
+#include "util/image_path.h" // find_correct_image_extension
 #endif
 
 // The maximum number of identical world names allowed
@@ -134,7 +134,7 @@ SubgameSpec findSubgame(const std::string &id)
 
 	std::string menuicon_path;
 #ifndef SERVER
-	menuicon_path = getImagePath(
+	find_correct_image_extension(menuicon_path,
 			game_path + DIR_DELIM + "menu" + DIR_DELIM + "icon.png");
 #endif
 	return SubgameSpec(id, game_path, gamemod_path, mods_paths, game_name,

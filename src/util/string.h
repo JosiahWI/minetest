@@ -117,9 +117,9 @@ inline std::string padStringRight(std::string str, size_t len)
  * @return If no end could be removed then "" is returned.
  */
 inline std::string removeStringEnd(const std::string &str,
-		const char *ends[])
+	const char *const *ends)
 {
-	const char **p = ends;
+	const char *const *p = ends;
 
 	for (; *p && (*p)[0] != '\0'; p++) {
 		std::string end = *p;
