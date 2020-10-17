@@ -17,10 +17,8 @@ static bool replace_ext(std::string &path, const char *ext)
 		return false;
 	// Find place of last dot, fail if \ or / found.
 	int last_dot_i = -1;
-	for (int i=path.size()-1; i>=0; --i)
-	{
-		if (path[i] == '.')
-		{
+	for (int i=path.size()-1; i>=0; --i) {
+		if (path[i] == '.') {
 			last_dot_i = i;
 			break;
 		}
@@ -32,7 +30,7 @@ static bool replace_ext(std::string &path, const char *ext)
 	if (last_dot_i == -1)
 		return false;
 	// Else make the new path
-	path = path.substr(0, last_dot_i+1) + ext;
+	path = path.substr(0, last_dot_i + 1) + ext;
 	return true;
 }
 
