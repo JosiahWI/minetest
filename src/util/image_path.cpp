@@ -17,7 +17,7 @@ static bool replace_ext(std::string &path, const char *ext)
 		return false;
 	// Find place of last dot, fail if \ or / found.
 	int last_dot_i = -1;
-	for (int i=path.size()-1; i>=0; --i) {
+	for (int i = path.size() - 1; i >= 0; --i) {
 		if (path[i] == '.') {
 			last_dot_i = i;
 			break;
@@ -34,10 +34,8 @@ static bool replace_ext(std::string &path, const char *ext)
 	return true;
 }
 
-/* clang-format off */
 void find_correct_image_extension(std::string &full_path,
 	const std::string &path_hint)
-/* clang-format on */
 {
 	full_path = path_hint;
 
@@ -50,11 +48,9 @@ void find_correct_image_extension(std::string &full_path,
 			return;
 	}
 	// Substitute image extensions until an existing path is found.
-	/* clang-format off */
 	for(const char *const *ext{ image_constants::image_extensions };
 			*ext;
 			++ext) {
-		/* clang-format on */
 		replace_ext(full_path, *ext);
 		if (fs::PathExists(full_path))
 			return;
