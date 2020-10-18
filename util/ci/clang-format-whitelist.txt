@@ -471,6 +471,8 @@ src/util/directiontables.cpp
 src/util/directiontables.h
 src/util/enriched_string.cpp
 src/util/enriched_string.h
+src/util/image_path.cpp
+src/util/image_path.h
 src/util/md32_common.h
 src/util/numeric.cpp
 src/util/numeric.h
