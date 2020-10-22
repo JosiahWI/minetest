@@ -15,6 +15,7 @@ namespace image_constants
  *
  * @param full_path Is set to the first path found, or to "" if none was found.
  * @param path_hint The image path to look for.
+ * @return true if a path was found, otherwise false.
  */
-void find_correct_image_extension(std::string &full_path,
+bool find_correct_image_extension(std::string &full_path,
 	const std::string &path_hint);

@@ -34,7 +34,7 @@ static bool replace_ext(std::string &path, const char *ext)
 	return true;
 }
 
-void find_correct_image_extension(std::string &full_path,
+bool find_correct_image_extension(std::string &full_path,
 	const std::string &path_hint)
 {
 	full_path = path_hint;
@@ -45,7 +45,7 @@ void find_correct_image_extension(std::string &full_path,
 		full_path += ".png";
 	} else {
 		if (fs::PathExists(full_path))
-			return;
+			return true;
 	}
 	// Substitute image extensions until an existing path is found.
 	for(const char *const *ext{ image_constants::image_extensions };
@@ -53,7 +53,8 @@ void find_correct_image_extension(std::string &full_path,
 			++ext) {
 		replace_ext(full_path, *ext);
 		if (fs::PathExists(full_path))
-			return;
+			return true;
 	}
 	full_path = "";
+	return false;
 }
