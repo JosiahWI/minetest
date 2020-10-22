@@ -2,11 +2,12 @@
 
 #include <string>
 
-namespace image_constants {
+namespace image_constants
+{
 	/// An array of image extensions ordered roughly by commonness.
 	/// We use a sentinel value of nullptr so we don't have to store a length.
 	constexpr const char *image_extensions[]{
-		"png", "jgp", "bmp", "tga", "pcx", "ppm", "psd", "wal", "rgb", nullptr};
+		"png", "jpg", "bmp", "tga", "pcx", "ppm", "psd", "wal", "rgb", nullptr};
 }
 
 /**
