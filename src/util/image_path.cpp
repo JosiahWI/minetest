@@ -15,22 +15,14 @@ static bool replace_ext(std::string &path, const char *ext)
 {
 	if (ext == nullptr)
 		return false;
-	// Find place of last dot, fail if \ or / found.
-	int last_dot_i = -1;
-	for (int i = path.size() - 1; i >= 0; --i) {
-		if (path[i] == '.') {
-			last_dot_i = i;
-			break;
-		}
 
-		if (path[i] == '\\' || path[i] == '/')
-			break;
-	}
-	// If not found, return an empty string
-	if (last_dot_i == -1)
+	// Find position of last dot in the string.
+	const auto last_dot_pos{ path.find_last_of('.') };
+	// If not found, return false.
+	if (last_dot_pos == std::string::npos)
 		return false;
 	// Else make the new path
-	path = path.substr(0, last_dot_i + 1) + ext;
+	path = path.substr(0, last_dot_pos + 1) + ext;
 	return true;
 }
 
