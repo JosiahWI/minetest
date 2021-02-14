@@ -55,6 +55,7 @@ PlayerSAO::PlayerSAO(ServerEnvironment *env_, RemotePlayer *player_, session_t p
 	m_prop.backface_culling = false;
 	m_prop.makes_footstep_sound = true;
 	m_prop.stepheight = PLAYER_DEFAULT_STEPHEIGHT * BS;
+	m_prop.show_on_minimap = true;
 	m_hp = m_prop.hp_max;
 	m_breath = m_prop.breath_max;
 	// Disable zoom in survival mode using a value of 0
@@ -147,7 +148,7 @@ std::string PlayerSAO::getClientInitializationData(u16 protocol_version)
 
 void PlayerSAO::getStaticData(std::string * result) const
 {
-	FATAL_ERROR("Obsolete function");
+	FATAL_ERROR("This function shall not be called for PlayerSAO");
 }
 
 void PlayerSAO::step(float dtime, bool send_recommended)
@@ -455,22 +456,32 @@ u16 PlayerSAO::punch(v3f dir,
 	return hitparams.wear;
 }
 
+void PlayerSAO::rightClick(ServerActiveObject *clicker)
+{
+	m_env->getScriptIface()->on_rightclickplayer(this, clicker);
+}
+
 void PlayerSAO::setHP(s32 hp, const PlayerHPChangeReason &reason)
 {
-	s32 oldhp = m_hp;
+	if (hp == (s32)m_hp)
+		return; // Nothing to do
 
-	hp = rangelim(hp, 0, m_prop.hp_max);
+	if (m_hp <= 0 && hp < (s32)m_hp)
+		return; // Cannot take more damage
 
-	if (oldhp != hp) {
-		s32 hp_change = m_env->getScriptIface()->on_player_hpchange(this, hp - oldhp, reason);
+	{
+		s32 hp_change = m_env->getScriptIface()->on_player_hpchange(this, hp - m_hp, reason);
 		if (hp_change == 0)
 			return;
 
-		hp = rangelim(oldhp + hp_change, 0, m_prop.hp_max);
+		hp = m_hp + hp_change;
 	}
 
+	s32 oldhp = m_hp;
+	hp = rangelim(hp, 0, m_prop.hp_max);
+
 	if (hp < oldhp && isImmortal())
-		return;
+		return; // Do not allow immortal players to be damaged
 
 	m_hp = hp;
 
@@ -525,7 +536,7 @@ bool PlayerSAO::setWieldedItem(const ItemStack &item)
 void PlayerSAO::disconnected()
 {
 	m_peer_id = PEER_ID_INEXISTENT;
-	m_pending_removal = true;
+	markForRemoval();
 }
 
 void PlayerSAO::unlinkPlayerSessionAndSave()

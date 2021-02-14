@@ -112,6 +112,15 @@ void LuaEntitySAO::addedToEnvironment(u32 dtime_s)
 	}
 }
 
+void LuaEntitySAO::dispatchScriptDeactivate()
+{
+	// Ensure that this is in fact a registered entity,
+	// and that it isn't already gone.
+	// The latter also prevents this from ever being called twice.
+	if (m_registered && !isGone())
+		m_env->getScriptIface()->luaentity_Deactivate(m_id);
+}
+
 void LuaEntitySAO::step(float dtime, bool send_recommended)
 {
 	if(!m_properties_sent)
@@ -302,7 +311,7 @@ u16 LuaEntitySAO::punch(v3f dir,
 {
 	if (!m_registered) {
 		// Delete unknown LuaEntities when punched
-		m_pending_removal = true;
+		markForRemoval();
 		return 0;
 	}
 
@@ -335,7 +344,7 @@ u16 LuaEntitySAO::punch(v3f dir,
 		clearParentAttachment();
 		clearChildAttachments();
 		m_env->getScriptIface()->luaentity_on_death(m_id, puncher);
-		m_pending_removal = true;
+		markForRemoval();
 	}
 
 	actionstream << puncher->getDescription() << " (id=" << puncher->getId() <<
@@ -482,6 +491,9 @@ void LuaEntitySAO::sendPosition(bool do_interpolate, bool is_movement_end)
 	// If the object is attached client-side, don't waste bandwidth sending its position to clients
 	if(isAttached())
 		return;
+
+	// Send attachment updates instantly to the client prior updating position
+	sendOutdatedData();
 
 	m_last_sent_move_precision = m_base_position.getDistanceFrom(
 			m_last_sent_position);
