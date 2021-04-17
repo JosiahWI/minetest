@@ -19,6 +19,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 #include "guiEditBox.h"
 
+#include "IrrCompileConfig.h"
 #include "IGUISkin.h"
 #include "IGUIEnvironment.h"
 #include "IGUIFont.h"
@@ -208,35 +209,19 @@ bool GUIEditBox::OnEvent(const SEvent &event)
 				}
 			}
 			break;
-		case EET_KEY_INPUT_EVENT: {
-#if (defined(__linux__) || defined(__FreeBSD__)) || defined(__DragonFly__)
-			// ################################################################
-			// ValkaTR:
-			// This part is the difference from the original intlGUIEditBox
-			// It converts UTF-8 character into a UCS-2 (wchar_t)
-			wchar_t wc = L'_';
-			mbtowc(&wc, (char *)&event.KeyInput.Char,
-					sizeof(event.KeyInput.Char));
-
-			// printf( "char: %lc (%u)  \r\n", wc, wc );
-
-			SEvent irrevent(event);
-			irrevent.KeyInput.Char = wc;
-			// ################################################################
-
-			if (processKey(irrevent))
-				return true;
-#else
+		case EET_KEY_INPUT_EVENT:
 			if (processKey(event))
 				return true;
-#endif // defined(linux)
-
 			break;
-		}
 		case EET_MOUSE_INPUT_EVENT:
 			if (processMouse(event))
 				return true;
 			break;
+#if (IRRLICHT_VERSION_MT_REVISION >= 2)
+		case EET_STRING_INPUT_EVENT:
+			inputString(*event.StringInput.Str);
+			return true;
+#endif
 		default:
 			break;
 		}
@@ -691,39 +676,44 @@ bool GUIEditBox::onKeyDelete(const SEvent &event, s32 &mark_begin, s32 &mark_end
 
 void GUIEditBox::inputChar(wchar_t c)
 {
+	if (c == 0)
+		return;
+	core::stringw s(&c, 1);
+	inputString(s);
+}
+
+void GUIEditBox::inputString(const core::stringw &str)
+{
 	if (!isEnabled() || !m_writable)
 		return;
 
-	if (c != 0) {
-		if (Text.size() < m_max || m_max == 0) {
-			core::stringw s;
+	u32 len = str.size();
+	if (Text.size()+len <= m_max || m_max == 0) {
+		core::stringw s;
+		if (m_mark_begin != m_mark_end) {
+			// replace marked text
+			s32 real_begin = m_mark_begin < m_mark_end ? m_mark_begin : m_mark_end;
+			s32 real_end = m_mark_begin < m_mark_end ? m_mark_end : m_mark_begin;
 
-			if (m_mark_begin != m_mark_end) {
-				// clang-format off
-				// replace marked text
-				s32 real_begin = m_mark_begin < m_mark_end ? m_mark_begin : m_mark_end;
-				s32 real_end = m_mark_begin < m_mark_end ? m_mark_end : m_mark_begin;
-
-				s = Text.subString(0, real_begin);
-				s.append(c);
-				s.append(Text.subString(real_end, Text.size() - real_end));
-				Text = s;
-				m_cursor_pos = real_begin + 1;
-				// clang-format on
-			} else {
-				// add new character
-				s = Text.subString(0, m_cursor_pos);
-				s.append(c);
-				s.append(Text.subString(m_cursor_pos,
-						Text.size() - m_cursor_pos));
-				Text = s;
-				++m_cursor_pos;
-			}
-
-			m_blink_start_time = porting::getTimeMs();
-			setTextMarkers(0, 0);
+			s = Text.subString(0, real_begin);
+			s.append(str);
+			s.append(Text.subString(real_end, Text.size() - real_end));
+			Text = s;
+			m_cursor_pos = real_begin + len;
+		} else {
+			// append string
+			s = Text.subString(0, m_cursor_pos);
+			s.append(str);
+			s.append(Text.subString(m_cursor_pos,
+					Text.size() - m_cursor_pos));
+			Text = s;
+			m_cursor_pos += len;
 		}
+
+		m_blink_start_time = porting::getTimeMs();
+		setTextMarkers(0, 0);
 	}
+
 	breakText();
 	sendGuiEvent(EGET_EDITBOX_CHANGED);
 	calculateScrollPos();

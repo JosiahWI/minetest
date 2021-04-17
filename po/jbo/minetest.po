@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Lojban (Minetest)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-30 21:13+0100\n"
-"PO-Revision-Date: 2020-03-15 18:36+0000\n"
-"Last-Translator: Robin Townsend <iantownsend@disroot.org>\n"
+"POT-Creation-Date: 2021-02-23 19:03+0100\n"
+"PO-Revision-Date: 2021-02-13 08:50+0000\n"
+"Last-Translator: Wuzzy <almikes@aol.com>\n"
 "Language-Team: Lojban <https://hosted.weblate.org/projects/minetest/minetest/"
 "jbo/>\n"
 "Language: jbo\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.0-dev\n"
+"X-Generator: Weblate 4.5-dev\n"
 
 #: builtin/client/death_formspec.lua src/client/game.cpp
 msgid "Respawn"
@@ -24,7 +24,7 @@ msgstr ".i do morsi"
 
 #: builtin/fstk/dialog.lua builtin/fstk/ui.lua src/gui/modalMenu.cpp
 msgid "OK"
-msgstr ""
+msgstr "fitytu'i"
 
 #: builtin/fstk/ui.lua
 #, fuzzy
@@ -80,7 +80,7 @@ msgstr ""
 #: src/gui/guiConfirmRegistration.cpp src/gui/guiKeyChangeMenu.cpp
 #: src/gui/guiPasswordChange.cpp
 msgid "Cancel"
-msgstr "sisti"
+msgstr "fitytoltu'i"
 
 #: builtin/mainmenu/dlg_config_world.lua builtin/mainmenu/dlg_contentstore.lua
 #: builtin/mainmenu/tab_content.lua
@@ -321,7 +321,7 @@ msgstr ""
 
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "Caves"
-msgstr ""
+msgstr "kevzda"
 
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "Create"
@@ -344,7 +344,7 @@ msgstr ".i ko kibycpa pa se kelci la'o zoi. minetest.net .zoi"
 
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "Dungeons"
-msgstr ""
+msgstr "kevdi'u"
 
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "Flat terrain"
@@ -352,11 +352,12 @@ msgstr ""
 
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "Floating landmasses in the sky"
-msgstr ""
+msgstr "lo tumla cu fulta lo tsani"
 
 #: builtin/mainmenu/dlg_create_world.lua
+#, fuzzy
 msgid "Floatlands (experimental)"
-msgstr ""
+msgstr "fulta tumla"
 
 #: builtin/mainmenu/dlg_create_world.lua src/settings_translation_file.cpp
 msgid "Game"
@@ -401,7 +402,7 @@ msgstr ""
 
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "Mountains"
-msgstr ""
+msgstr "cmana"
 
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "Mud flow"
@@ -425,7 +426,7 @@ msgstr ""
 
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "Rivers"
-msgstr ""
+msgstr "rirxe"
 
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "Sea level rivers"
@@ -433,9 +434,8 @@ msgstr ""
 
 #: builtin/mainmenu/dlg_create_world.lua
 #: builtin/mainmenu/dlg_settings_advanced.lua
-#, fuzzy
 msgid "Seed"
-msgstr "cunso jai krasi"
+msgstr "cunso namcu"
 
 #: builtin/mainmenu/dlg_create_world.lua
 msgid "Smooth transition between biomes"
@@ -714,6 +714,10 @@ msgid "Loading..."
 msgstr ".i ca'o samymo'i"
 
 #: builtin/mainmenu/serverlistmgr.lua
+msgid "Public server list is disabled"
+msgstr ""
+
+#: builtin/mainmenu/serverlistmgr.lua
 msgid "Try reenabling public serverlist and check your internet connection."
 msgstr ""
 ".i ko troci lo nu za'u re'u samymo'i lo liste be lo'i samse'u .i ko cipcta "
@@ -807,7 +811,7 @@ msgstr "finti se kelci"
 
 #: builtin/mainmenu/tab_local.lua
 msgid "Enable Damage"
-msgstr ""
+msgstr "pilno lo selxai"
 
 #: builtin/mainmenu/tab_local.lua
 #, fuzzy
@@ -835,9 +839,8 @@ msgid "No world created or selected!"
 msgstr ".i do no munje cu cupra ja cu cuxna"
 
 #: builtin/mainmenu/tab_local.lua
-#, fuzzy
 msgid "Password"
-msgstr "lo cnino lerpoijaspu"
+msgstr "lo lerpoijaspu"
 
 #: builtin/mainmenu/tab_local.lua
 msgid "Play Game"
@@ -866,7 +869,7 @@ msgstr "co'a kelci"
 
 #: builtin/mainmenu/tab_online.lua
 msgid "Address / Port"
-msgstr "judri .i judrnporte"
+msgstr "lo samjudri jo'u judrnporte"
 
 #: builtin/mainmenu/tab_online.lua
 msgid "Connect"
@@ -894,7 +897,7 @@ msgstr "co'a kansa fi le ka kelci"
 
 #: builtin/mainmenu/tab_online.lua
 msgid "Name / Password"
-msgstr "cmene .i lerpoijaspu"
+msgstr "lo cmene .e lo lerpoijaspu"
 
 #: builtin/mainmenu/tab_online.lua
 msgid "Ping"
@@ -910,9 +913,8 @@ msgid "2x"
 msgstr ""
 
 #: builtin/mainmenu/tab_settings.lua
-#, fuzzy
 msgid "3D Clouds"
-msgstr "le bliku dilnu"
+msgstr "cibyca'u dilnu"
 
 #: builtin/mainmenu/tab_settings.lua
 msgid "4x"
@@ -953,12 +955,10 @@ msgid "Fancy Leaves"
 msgstr "lo tolkli pezli"
 
 #: builtin/mainmenu/tab_settings.lua
-#, fuzzy
 msgid "Mipmap"
 msgstr "lo puvrmipmepi"
 
 #: builtin/mainmenu/tab_settings.lua
-#, fuzzy
 msgid "Mipmap + Aniso. Filter"
 msgstr "lo puvrmipmepi .e lo puvytolmanfyju'e"
 
@@ -967,9 +967,8 @@ msgid "No Filter"
 msgstr ""
 
 #: builtin/mainmenu/tab_settings.lua
-#, fuzzy
 msgid "No Mipmap"
-msgstr "lo puvrmipmepi"
+msgstr ""
 
 #: builtin/mainmenu/tab_settings.lua
 #, fuzzy
@@ -991,14 +990,12 @@ msgid "Opaque Leaves"
 msgstr "lo tolkli pezli"
 
 #: builtin/mainmenu/tab_settings.lua
-#, fuzzy
 msgid "Opaque Water"
-msgstr "lo tolkli djacu"
+msgstr "tolkli djacu"
 
 #: builtin/mainmenu/tab_settings.lua
-#, fuzzy
 msgid "Particles"
-msgstr "lo kantu"
+msgstr "kantu"
 
 #: builtin/mainmenu/tab_settings.lua
 msgid "Screen:"
@@ -1427,7 +1424,7 @@ msgstr "nonselkansa"
 
 #: src/client/game.cpp
 msgid "Sound Volume"
-msgstr ""
+msgstr "ni sance"
 
 #: src/client/game.cpp
 #, fuzzy
@@ -1465,7 +1462,7 @@ msgstr ""
 #: src/client/game.cpp
 #, c-format
 msgid "Volume changed to %d%%"
-msgstr ""
+msgstr ".i fe lo ni sance cu cenba fi li %d ce'i"
 
 #: src/client/game.cpp
 msgid "Wireframe shown"
@@ -1576,9 +1573,8 @@ msgid "Insert"
 msgstr ""
 
 #: src/client/keycode.cpp src/gui/guiKeyChangeMenu.cpp
-#, fuzzy
 msgid "Left"
-msgstr "za'i zu'e muvdu"
+msgstr "zu'e muvdu"
 
 #: src/client/keycode.cpp
 msgid "Left Button"
@@ -1704,9 +1700,8 @@ msgid "Return"
 msgstr ""
 
 #: src/client/keycode.cpp src/gui/guiKeyChangeMenu.cpp
-#, fuzzy
 msgid "Right"
-msgstr "za'i ri'u muvdu"
+msgstr "ri'u muvdu"
 
 #: src/client/keycode.cpp
 msgid "Right Button"
@@ -1829,9 +1824,8 @@ msgid "Automatic jumping"
 msgstr ""
 
 #: src/gui/guiKeyChangeMenu.cpp
-#, fuzzy
 msgid "Backward"
-msgstr "za'i ti'a muvdu"
+msgstr "ti'a muvdu"
 
 #: src/gui/guiKeyChangeMenu.cpp
 #, fuzzy
@@ -1856,21 +1850,19 @@ msgstr ""
 
 #: src/gui/guiKeyChangeMenu.cpp
 msgid "Dec. volume"
-msgstr ""
+msgstr "jdikygau lo ni sance"
 
 #: src/gui/guiKeyChangeMenu.cpp
 msgid "Double tap \"jump\" to toggle fly"
 msgstr ""
 
 #: src/gui/guiKeyChangeMenu.cpp
-#, fuzzy
 msgid "Drop"
-msgstr "mu'e falcru"
+msgstr "falcru"
 
 #: src/gui/guiKeyChangeMenu.cpp
-#, fuzzy
 msgid "Forward"
-msgstr "za'i ca'u muvdu"
+msgstr "ca'u muvdu"
 
 #: src/gui/guiKeyChangeMenu.cpp
 msgid "Inc. range"
@@ -1878,7 +1870,7 @@ msgstr ""
 
 #: src/gui/guiKeyChangeMenu.cpp
 msgid "Inc. volume"
-msgstr ""
+msgstr "zengau lo ni sance"
 
 #: src/gui/guiKeyChangeMenu.cpp
 msgid "Inventory"
@@ -2084,9 +2076,8 @@ msgid "2D noise that locates the river valleys and channels."
 msgstr ""
 
 #: src/settings_translation_file.cpp
-#, fuzzy
 msgid "3D clouds"
-msgstr "le bliku dilnu"
+msgstr "cibyca'u dilnu"
 
 #: src/settings_translation_file.cpp
 msgid "3D mode"
@@ -2883,9 +2874,8 @@ msgid "Dig key"
 msgstr "za'i ri'u muvdu"
 
 #: src/settings_translation_file.cpp
-#, fuzzy
 msgid "Digging particles"
-msgstr "lo kantu"
+msgstr "kakpa kantu"
 
 #: src/settings_translation_file.cpp
 #, fuzzy
@@ -2945,7 +2935,7 @@ msgid "Enable console window"
 msgstr ""
 
 #: src/settings_translation_file.cpp
-msgid "Enable creative mode for new created maps."
+msgid "Enable creative mode for all players"
 msgstr ""
 
 #: src/settings_translation_file.cpp
@@ -4998,7 +4988,6 @@ msgid "Minimum texture size"
 msgstr ""
 
 #: src/settings_translation_file.cpp
-#, fuzzy
 msgid "Mipmapping"
 msgstr "lo puvrmipmepi"
 
@@ -5661,6 +5650,10 @@ msgid ""
 msgstr ""
 
 #: src/settings_translation_file.cpp
+msgid "Show nametag backgrounds by default"
+msgstr ""
+
+#: src/settings_translation_file.cpp
 msgid "Shutdown message"
 msgstr ""
 
@@ -6237,9 +6230,8 @@ msgid "Virtual joystick triggers aux button"
 msgstr ""
 
 #: src/settings_translation_file.cpp
-#, fuzzy
 msgid "Volume"
-msgstr "lo ni sance "
+msgstr "lo ni sance"
 
 #: src/settings_translation_file.cpp
 msgid ""
@@ -6343,6 +6335,12 @@ msgid ""
 "Whether FreeType fonts are used, requires FreeType support to be compiled "
 "in.\n"
 "If disabled, bitmap and XML vectors fonts are used instead."
+msgstr ""
+
+#: src/settings_translation_file.cpp
+msgid ""
+"Whether nametag backgrounds should be shown by default.\n"
+"Mods may still set a background."
 msgstr ""
 
 #: src/settings_translation_file.cpp

@@ -934,7 +934,7 @@ void GenericCAO::updateNametag()
 	if (m_is_local_player) // No nametag for local player
 		return;
 
-	if (m_prop.nametag.empty()) {
+	if (m_prop.nametag.empty() || m_prop.nametag_color.getAlpha() == 0) {
 		// Delete nametag
 		if (m_nametag) {
 			m_client->getCamera()->removeNametag(m_nametag);
@@ -952,12 +952,14 @@ void GenericCAO::updateNametag()
 	if (!m_nametag) {
 		// Add nametag
 		m_nametag = m_client->getCamera()->addNametag(node,
-			m_prop.nametag, m_prop.nametag_color, pos);
+			m_prop.nametag, m_prop.nametag_color,
+			m_prop.nametag_bgcolor, pos);
 	} else {
 		// Update nametag
-		m_nametag->nametag_text = m_prop.nametag;
-		m_nametag->nametag_color = m_prop.nametag_color;
-		m_nametag->nametag_pos = pos;
+		m_nametag->text = m_prop.nametag;
+		m_nametag->textcolor = m_prop.nametag_color;
+		m_nametag->bgcolor = m_prop.nametag_bgcolor;
+		m_nametag->pos = pos;
 	}
 }
 
@@ -1471,11 +1473,8 @@ void GenericCAO::updateAnimation()
 	if (m_animated_meshnode->getAnimationSpeed() != m_animation_speed)
 		m_animated_meshnode->setAnimationSpeed(m_animation_speed);
 	m_animated_meshnode->setTransitionTime(m_animation_blend);
-// Requires Irrlicht 1.8 or greater
-#if (IRRLICHT_VERSION_MAJOR == 1 && IRRLICHT_VERSION_MINOR >= 8) || IRRLICHT_VERSION_MAJOR > 1
 	if (m_animated_meshnode->getLoopMode() != m_animation_loop)
 		m_animated_meshnode->setLoopMode(m_animation_loop);
-#endif
 }
 
 void GenericCAO::updateAnimationSpeed()

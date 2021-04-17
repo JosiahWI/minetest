@@ -56,7 +56,7 @@ void set_default_settings()
 	settings->setDefault("client_unload_unused_data_timeout", "600");
 	settings->setDefault("client_mapblock_limit", "7500");
 	settings->setDefault("enable_build_where_you_stand", "false");
-	settings->setDefault("curl_timeout", "5000");
+	settings->setDefault("curl_timeout", "20000");
 	settings->setDefault("curl_parallel_limit", "8");
 	settings->setDefault("curl_file_download_timeout", "300000");
 	settings->setDefault("curl_verify_cert", "true");
@@ -80,7 +80,7 @@ void set_default_settings()
 	settings->setDefault("keymap_drop", "KEY_KEY_Q");
 	settings->setDefault("keymap_zoom", "KEY_KEY_Z");
 	settings->setDefault("keymap_inventory", "KEY_KEY_I");
-	settings->setDefault("keymap_special1", "KEY_KEY_E");
+	settings->setDefault("keymap_aux1", "KEY_KEY_E");
 	settings->setDefault("keymap_chat", "KEY_KEY_T");
 	settings->setDefault("keymap_cmd", "/");
 	settings->setDefault("keymap_cmd_local", ".");
@@ -240,6 +240,7 @@ void set_default_settings()
 #endif
 	settings->setDefault("enable_particles", "true");
 	settings->setDefault("arm_inertia", "true");
+	settings->setDefault("show_nametag_backgrounds", "true");
 
 	settings->setDefault("enable_minimap", "true");
 	settings->setDefault("minimap_shape_round", "true");
@@ -303,12 +304,7 @@ void set_default_settings()
 	settings->setDefault("mono_font_path_bold_italic", porting::getDataPath("fonts" DIR_DELIM "Cousine-BoldItalic.ttf"));
 	settings->setDefault("fallback_font_path", porting::getDataPath("fonts" DIR_DELIM "DroidSansFallbackFull.ttf"));
 
-	settings->setDefault("fallback_font_shadow", "1");
-	settings->setDefault("fallback_font_shadow_alpha", "128");
-
 	std::string font_size_str = std::to_string(TTF_DEFAULT_FONT_SIZE);
-
-	settings->setDefault("fallback_font_size", font_size_str);
 #else
 	settings->setDefault("freetype", "false");
 	settings->setDefault("font_path", porting::getDataPath("fonts" DIR_DELIM "mono_dejavu_sans"));
@@ -463,7 +459,7 @@ void set_default_settings()
 	settings->setDefault("touchtarget", "true");
 	settings->setDefault("touchscreen_threshold","20");
 	settings->setDefault("fixed_virtual_joystick", "false");
-	settings->setDefault("virtual_joystick_triggers_aux", "false");
+	settings->setDefault("virtual_joystick_triggers_aux1", "false");
 	settings->setDefault("smooth_lighting", "false");
 	settings->setDefault("max_simultaneous_block_sends_per_client", "10");
 	settings->setDefault("emergequeue_limit_diskonly", "16");
