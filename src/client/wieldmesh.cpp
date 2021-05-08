@@ -307,18 +307,21 @@ static scene::SMesh *createSpecialNodeMesh(Client *client, MapNode n,
 	MeshMakeData mesh_make_data(client, false);
 	MeshCollector collector;
 	mesh_make_data.setSmoothLighting(false);
-	MapblockMeshGenerator gen(&mesh_make_data, &collector);
+	MapblockMeshGenerator gen(&mesh_make_data, &collector,
+		client->getSceneManager()->getMeshManipulator());
 
 	if (n.getParam2()) {
 		// keep it
 	} else if (f.param_type_2 == CPT2_WALLMOUNTED ||
 			f.param_type_2 == CPT2_COLORED_WALLMOUNTED) {
-		if (f.drawtype == NDT_TORCHLIKE)
-			n.setParam2(1);
-		else if (f.drawtype == NDT_SIGNLIKE ||
+		if (f.drawtype == NDT_TORCHLIKE ||
+				f.drawtype == NDT_SIGNLIKE ||
 				f.drawtype == NDT_NODEBOX ||
-				f.drawtype == NDT_MESH)
+				f.drawtype == NDT_MESH) {
 			n.setParam2(4);
+		}
+	} else if (f.drawtype == NDT_SIGNLIKE || f.drawtype == NDT_TORCHLIKE) {
+		n.setParam2(1);
 	}
 	gen.renderSingle(n.getContent(), n.getParam2());
 
@@ -536,7 +539,7 @@ void getItemMesh(Client *client, const ItemStack &item, ItemMesh *result)
 	content_t id = ndef->getId(def.name);
 
 	FATAL_ERROR_IF(!g_extrusion_mesh_cache, "Extrusion mesh cache is not yet initialized");
-	
+
 	scene::SMesh *mesh = nullptr;
 
 	// Shading is on by default

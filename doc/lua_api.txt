@@ -1112,8 +1112,20 @@ Look for examples in `games/devtest` or `games/minetest_game`.
     * Invisible, uses no texture.
 * `liquid`
     * The cubic source node for a liquid.
+    * Faces bordering to the same node are never rendered.
+    * Connects to node specified in `liquid_alternative_flowing`.
+    * Use `backface_culling = false` for the tiles you want to make
+      visible when inside the node.
 * `flowingliquid`
     * The flowing version of a liquid, appears with various heights and slopes.
+    * Faces bordering to the same node are never rendered.
+    * Connects to node specified in `liquid_alternative_source`.
+    * Node textures are defined with `special_tiles` where the first tile
+      is for the top and bottom faces and the second tile is for the side
+      faces.
+    * `tiles` is used for the item/inventory/wield image rendering.
+    * Use `backface_culling = false` for the special tiles you want to make
+      visible when inside the node
 * `glasslike`
     * Often used for partially-transparent nodes.
     * Only external sides of textures are visible.
@@ -1140,14 +1152,20 @@ Look for examples in `games/devtest` or `games/minetest_game`.
       used to compensate for how `glasslike` reduces visual thickness.
 * `torchlike`
     * A single vertical texture.
-    * If placed on top of a node, uses the first texture specified in `tiles`.
-    * If placed against the underside of a node, uses the second texture
-      specified in `tiles`.
-    * If placed on the side of a node, uses the third texture specified in
-      `tiles` and is perpendicular to that node.
+    * If `paramtype2="[color]wallmounted":
+        * If placed on top of a node, uses the first texture specified in `tiles`.
+        * If placed against the underside of a node, uses the second texture
+          specified in `tiles`.
+        * If placed on the side of a node, uses the third texture specified in
+          `tiles` and is perpendicular to that node.
+    * If `paramtype2="none"`:
+        * Will be rendered as if placed on top of a node (see
+          above) and only the first texture is used.
 * `signlike`
     * A single texture parallel to, and mounted against, the top, underside or
       side of a node.
+    * If `paramtype2="[color]wallmounted", it rotates according to `param2`
+    * If `paramtype2="none"`, it will always be on the floor.
 * `plantlike`
     * Two vertical and diagonal textures at right-angles to each other.
     * See `paramtype2 = "meshoptions"` above for other options.
@@ -3094,9 +3112,8 @@ Colors
 
 Named colors are also supported and are equivalent to
 [CSS Color Module Level 4](http://dev.w3.org/csswg/css-color/#named-colors).
-To specify the value of the alpha channel, append `#AA` to the end of the color
-name (e.g. `colorname#08`). For named colors the hexadecimal string
-representing the alpha value must (always) be two hexadecimal digits.
+To specify the value of the alpha channel, append `#A` or `#AA` to the end of
+the color name (e.g. `colorname#08`).
 
 `ColorSpec`
 -----------
@@ -4483,6 +4500,9 @@ Utilities
 * `minetest.sha1(data, [raw])`: returns the sha1 hash of data
     * `data`: string of data to hash
     * `raw`: return raw bytes instead of hex digits, default: false
+* `minetest.colorspec_to_colorstring(colorspec)`: Converts a ColorSpec to a
+  ColorString. If the ColorSpec is invalid, returns `nil`.
+    * `colorspec`: The ColorSpec to convert
 
 Logging
 -------
@@ -7445,7 +7465,16 @@ Used by `minetest.register_node`.
         -- If true, liquids flow into and replace this node.
         -- Warning: making a liquid node 'floodable' will cause problems.
 
-        liquidtype = "none",  -- "none" / "source" / "flowing"
+        liquidtype = "none",  -- specifies liquid physics
+        -- * "none":    no liquid physics
+        -- * "source":  spawns flowing liquid nodes at all 4 sides and below;
+        --              recommended drawtype: "liquid".
+        -- * "flowing": spawned from source, spawns more flowing liquid nodes
+        --              around it until `liquid_range` is reached;
+        --              will drain out without a source;
+        --              recommended drawtype: "flowingliquid".
+        -- If it's "source" or "flowing" and `liquid_range > 0`, then
+        -- both `liquid_alternative_*` fields must be specified
 
         liquid_alternative_flowing = "",  -- Flowing version of source liquid
 
@@ -7468,7 +7497,10 @@ Used by `minetest.register_node`.
         -- `minetest.set_node_level` and `minetest.add_node_level`.
 		-- Values above 124 might causes collision detection issues.
 
-        liquid_range = 8,  -- Number of flowing nodes around source (max. 8)
+        liquid_range = 8,
+        -- Maximum distance that flowing liquid nodes can spread around
+        -- source on flat land;
+        -- maximum = 8; set to 0 to disable liquid flow
 
         drowning = 0,
         -- Player will take this amount of damage if no bubbles are left
