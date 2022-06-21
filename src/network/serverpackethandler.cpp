@@ -41,6 +41,11 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "util/serialize.h"
 #include "util/srp.h"
 
+// GCC does not like comparing to unsigned when constant is 0 (-Wtype-limits)
+static constexpr auto getSerFmtVerLowestRead() {
+	return SER_FMT_VER_LOWEST_READ;
+}
+
 void Server::handleCommand_Deprecated(NetworkPacket* pkt)
 {
 	infostream << "Server: " << toServerCommandTable[pkt->getCommand()].name
@@ -108,7 +113,7 @@ void Server::handleCommand_Init(NetworkPacket* pkt)
 	// Use the highest version supported by both
 	u8 depl_serial_v = std::min(client_max, our_max);
 	// If it's lower than the lowest supported, give up.
-	if (depl_serial_v < SER_FMT_VER_LOWEST_READ)
+	if (depl_serial_v < getSerFmtVerLowestRead())
 		depl_serial_v = SER_FMT_VER_INVALID;
 
 	if (depl_serial_v == SER_FMT_VER_INVALID) {
