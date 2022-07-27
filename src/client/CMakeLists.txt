@@ -1,0 +1,43 @@
+add_subdirectory(meshgen)
+add_subdirectory(render)
+add_subdirectory(shadows)
+
+target_sources(minetest
+  PRIVATE
+    activeobjectmgr.cpp
+    camera.cpp
+    client.cpp
+    clientenvironment.cpp
+    clientlauncher.cpp
+    clientmap.cpp
+    clientmedia.cpp
+    clientobject.cpp
+    clouds.cpp
+    content_cao.cpp
+    content_cso.cpp
+    content_mapblock.cpp
+    filecache.cpp
+    fontengine.cpp
+    game.cpp
+    gameui.cpp
+    guiscalingfilter.cpp
+    hud.cpp
+    imagefilters.cpp
+    inputhandler.cpp
+    joystick_controller.cpp
+    keycode.cpp
+    localplayer.cpp
+    mapblock_mesh.cpp
+    mesh.cpp
+    mesh_generator_thread.cpp
+    minimap.cpp
+    particles.cpp
+    renderingengine.cpp
+    shader.cpp
+    sky.cpp
+    sound.cpp
+    sound_openal.cpp
+    tile.cpp
+    wieldmesh.cpp
+)
+

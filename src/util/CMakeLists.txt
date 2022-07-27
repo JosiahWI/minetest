@@ -1,0 +1,20 @@
+target_sources(common
+  PRIVATE
+    areastore.cpp
+    auth.cpp
+    base64.cpp
+    directiontables.cpp
+    enriched_string.cpp
+    ieee_float.cpp
+    metricsbackend.cpp
+    numeric.cpp
+    png.cpp
+    pointedthing.cpp
+    quicktune.cpp
+    serialize.cpp
+    sha1.cpp
+    sha256.c
+    string.cpp
+    srp.cpp
+    timetaker.cpp
+)

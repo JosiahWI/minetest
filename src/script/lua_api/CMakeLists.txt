@@ -1,0 +1,38 @@
+target_sources(common
+  PRIVATE
+    l_areastore.cpp
+    l_auth.cpp
+    l_base.cpp
+    l_craft.cpp
+    l_env.cpp
+    l_http.cpp
+    l_inventory.cpp
+    l_item.cpp
+    l_itemstackmeta.cpp
+    l_mapgen.cpp
+    l_metadata.cpp
+    l_modchannels.cpp
+    l_nodemeta.cpp
+    l_nodetimer.cpp
+    l_noise.cpp
+    l_object.cpp
+    l_particles.cpp
+    l_playermeta.cpp
+    l_rollback.cpp
+    l_server.cpp
+    l_settings.cpp
+    l_storage.cpp
+    l_util.cpp
+    l_vmanip.cpp
+)
+
+target_sources(minetest
+  PRIVATE
+    l_camera.cpp
+    l_client.cpp
+    l_localplayer.cpp
+    l_mainmenu.cpp
+    l_minimap.cpp
+    l_particles_local.cpp
+    l_sound.cpp
+)

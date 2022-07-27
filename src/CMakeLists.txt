@@ -6,183 +6,103 @@ add_subdirectory(
 )
 
 find_package(CURL REQUIRED)
+find_package(Freetype REQUIRED)
 find_package(GMP REQUIRED)
 find_package(IrrlichtMt REQUIRED)
 find_package(Json REQUIRED)
 find_package(Ncursesw REQUIRED)
+if(USE_SOUND)
+  find_package(OpenAlTarget REQUIRED)
+endif()
 find_package(SQLite3 REQUIRED)
 find_package(Threads REQUIRED)
 find_package(ZLIB REQUIRED)
 find_package(Zstd REQUIRED)
 
-add_library(common OBJECT
-  ban.cpp
-  chat.cpp
-  clientiface.cpp
-  collision.cpp
-  content_mapnode.cpp
-  content_nodemeta.cpp
-  content/content.cpp
-  content/mod_configuration.cpp
-  content/mods.cpp
-  content/subgames.cpp
-  convert_json.cpp
-  craftdef.cpp
-  database/database.cpp
-  database/database-dummy.cpp
-  database/database-files.cpp
-  database/database-leveldb.cpp
-  database/database-postgresql.cpp
-  database/database-redis.cpp
-  database/database-sqlite3.cpp
-  debug.cpp
-  defaultsettings.cpp
-  emerge.cpp
-  environment.cpp
-  face_position_cache.cpp
-  filesys.cpp
-  gettext.cpp
-  httpfetch.cpp
-  hud.cpp
-  inventory.cpp
-  inventorymanager.cpp
-  itemdef.cpp
-  itemstackmetadata.cpp
-  light.cpp
-  log.cpp
-  map.cpp
-  map_settings_manager.cpp
-  mapblock.cpp
-  mapgen/cavegen.cpp
-  mapgen/dungeongen.cpp
-  mapgen/mapgen_carpathian.cpp
-  mapgen/mapgen.cpp
-  mapgen/mapgen_flat.cpp
-  mapgen/mapgen_fractal.cpp
-  mapgen/mapgen_singlenode.cpp
-  mapgen/mapgen_v5.cpp
-  mapgen/mapgen_v6.cpp
-  mapgen/mapgen_v7.cpp
-  mapgen/mapgen_valleys.cpp
-  mapgen/mg_biome.cpp
-  mapgen/mg_decoration.cpp
-  mapgen/mg_ore.cpp
-  mapgen/mg_schematic.cpp
-  mapgen/treegen.cpp
-  mapnode.cpp
-  mapsector.cpp
-  metadata.cpp
-  modchannels.cpp
-  nameidmapping.cpp
-  network/address.cpp
-  network/connection.cpp
-  network/connectionthreads.cpp
-  network/networkpacket.cpp
-  network/serverpackethandler.cpp
-  network/serveropcodes.cpp
-  network/socket.cpp
-  nodedef.cpp
-  nodemetadata.cpp
-  nodetimer.cpp
-  noise.cpp
-  objdef.cpp
-  object_properties.cpp
-  particles.cpp
-  pathfinder.cpp
-  player.cpp
-  porting.cpp
-  profiler.cpp
-  raycast.cpp
-  reflowscan.cpp
-  remoteplayer.cpp
-  rollback.cpp
-  rollback_interface.cpp
-  script/common/c_content.cpp
-  script/common/c_converter.cpp
-  script/common/c_internal.cpp
-  script/common/c_packer.cpp
-  script/common/c_types.cpp
-  script/common/helper.cpp
-  script/cpp_api/s_async.cpp
-  script/cpp_api/s_base.cpp
-  script/cpp_api/s_entity.cpp
-  script/cpp_api/s_env.cpp
-  script/cpp_api/s_inventory.cpp
-  script/cpp_api/s_item.cpp
-  script/cpp_api/s_modchannels.cpp
-  script/cpp_api/s_node.cpp
-  script/cpp_api/s_nodemeta.cpp
-  script/cpp_api/s_player.cpp
-  script/cpp_api/s_security.cpp
-  script/cpp_api/s_server.cpp
-  script/lua_api/l_areastore.cpp
-  script/lua_api/l_auth.cpp
-  script/lua_api/l_base.cpp
-  script/lua_api/l_craft.cpp
-  script/lua_api/l_env.cpp
-  script/lua_api/l_http.cpp
-  script/lua_api/l_inventory.cpp
-  script/lua_api/l_item.cpp
-  script/lua_api/l_itemstackmeta.cpp
-  script/lua_api/l_mapgen.cpp
-  script/lua_api/l_metadata.cpp
-  script/lua_api/l_modchannels.cpp
-  script/lua_api/l_nodemeta.cpp
-  script/lua_api/l_nodetimer.cpp
-  script/lua_api/l_noise.cpp
-  script/lua_api/l_object.cpp
-  script/lua_api/l_particles.cpp
-  script/lua_api/l_playermeta.cpp
-  script/lua_api/l_rollback.cpp
-  script/lua_api/l_server.cpp
-  script/lua_api/l_settings.cpp
-  script/lua_api/l_storage.cpp
-  script/lua_api/l_util.cpp
-  script/lua_api/l_vmanip.cpp
-  script/scripting_server.cpp
-  serialization.cpp
-  server.cpp
-  server/activeobjectmgr.cpp
-  server/luaentity_sao.cpp
-  server/mods.cpp
-  server/player_sao.cpp
-  server/serveractiveobject.cpp
-  server/serverinventorymgr.cpp
-  server/unit_sao.cpp
-  serverenvironment.cpp
-  serverlist.cpp
-  settings.cpp
-  staticobject.cpp
-  terminal_chat_console.cpp
-  texture_override.cpp
-  threading/event.cpp
-  threading/thread.cpp
-  threading/semaphore.cpp
-  tileanimation.cpp
-  tool.cpp
-  translation.cpp
-  util/areastore.cpp
-  util/auth.cpp
-  util/base64.cpp
-  util/directiontables.cpp
-  util/enriched_string.cpp
-  util/ieee_float.cpp
-  util/metricsbackend.cpp
-  util/numeric.cpp
-  util/png.cpp
-  util/pointedthing.cpp
-  util/quicktune.cpp
-  util/serialize.cpp
-  util/sha1.cpp
-  util/sha256.c
-  util/string.cpp
-  util/srp.cpp
-  util/timetaker.cpp
-  version.cpp
-  voxel.cpp
-  voxelalgorithms.cpp
-)
+add_library(common OBJECT "")
 add_library(minetest::common ALIAS common)
+
+add_executable(minetest WIN32 "")
+
+# Most subdirectories register additional source dependencies.
+add_subdirectory(benchmark)
+add_subdirectory(client)
+add_subdirectory(content)
+add_subdirectory(database)
+add_subdirectory(gui)
+add_subdirectory(irrlicht_changes)
+add_subdirectory(mapgen)
+add_subdirectory(network)
+add_subdirectory(script)
+add_subdirectory(server)
+add_subdirectory(threading)
+add_subdirectory(unittest)
+add_subdirectory(util)
+
+target_sources(common
+  PRIVATE
+    ban.cpp
+    chat.cpp
+    clientiface.cpp
+    collision.cpp
+    content_mapnode.cpp
+    content_nodemeta.cpp
+    convert_json.cpp
+    craftdef.cpp
+    debug.cpp
+    defaultsettings.cpp
+    emerge.cpp
+    environment.cpp
+    face_position_cache.cpp
+    filesys.cpp
+    gettext.cpp
+    httpfetch.cpp
+    hud.cpp
+    inventory.cpp
+    inventorymanager.cpp
+    itemdef.cpp
+    itemstackmetadata.cpp
+    light.cpp
+    log.cpp
+    map.cpp
+    map_settings_manager.cpp
+    mapblock.cpp
+    mapnode.cpp
+    mapsector.cpp
+    metadata.cpp
+    modchannels.cpp
+    nameidmapping.cpp
+    nodedef.cpp
+    nodemetadata.cpp
+    nodetimer.cpp
+    noise.cpp
+    objdef.cpp
+    object_properties.cpp
+    particles.cpp
+    pathfinder.cpp
+    player.cpp
+    porting.cpp
+    profiler.cpp
+    raycast.cpp
+    reflowscan.cpp
+    remoteplayer.cpp
+    rollback.cpp
+    rollback_interface.cpp
+    serialization.cpp
+    server.cpp
+    serverenvironment.cpp
+    serverlist.cpp
+    settings.cpp
+    staticobject.cpp
+    terminal_chat_console.cpp
+    texture_override.cpp
+    tileanimation.cpp
+    tool.cpp
+    translation.cpp
+    version.cpp
+    voxel.cpp
+    voxelalgorithms.cpp
+)
 
 target_include_directories(common
   PUBLIC
@@ -212,105 +132,9 @@ target_compile_features(common
     cxx_std_14
 )
 
-add_subdirectory(benchmark)
-add_subdirectory(unittest)
-
-find_package(Freetype REQUIRED)
-
-if(USE_SOUND)
-  find_package(OpenAlTarget REQUIRED)
-endif()
-
-add_executable(minetest WIN32
-  client/activeobjectmgr.cpp
-  client/camera.cpp
-  client/client.cpp
-  client/clientenvironment.cpp
-  client/clientlauncher.cpp
-  client/clientmap.cpp
-  client/clientmedia.cpp
-  client/clientobject.cpp
-  client/clouds.cpp
-  client/content_cao.cpp
-  client/content_cso.cpp
-  client/content_mapblock.cpp
-  client/filecache.cpp
-  client/fontengine.cpp
-  client/game.cpp
-  client/gameui.cpp
-  client/guiscalingfilter.cpp
-  client/hud.cpp
-  client/imagefilters.cpp
-  client/inputhandler.cpp
-  client/joystick_controller.cpp
-  client/keycode.cpp
-  client/localplayer.cpp
-  client/mapblock_mesh.cpp
-  client/mesh.cpp
-  client/mesh_generator_thread.cpp
-  client/meshgen/collector.cpp
-  client/minimap.cpp
-  client/particles.cpp
-  client/render/anaglyph.cpp
-  client/render/core.cpp
-  client/render/factory.cpp
-  client/render/interlaced.cpp
-  client/render/pageflip.cpp
-  client/render/plain.cpp
-  client/render/sidebyside.cpp
-  client/render/stereo.cpp
-  client/renderingengine.cpp
-  client/shader.cpp
-  client/shadows/dynamicshadows.cpp
-  client/shadows/dynamicshadowsrender.cpp
-  client/shadows/shadowsshadercallbacks.cpp
-  client/shadows/shadowsScreenQuad.cpp
-  client/sky.cpp
-  client/sound.cpp
-  client/sound_openal.cpp
-  client/tile.cpp
-  client/wieldmesh.cpp
-  gui/guiAnimatedImage.cpp
-  gui/guiBackgroundImage.cpp
-  gui/guiBox.cpp
-  gui/guiButton.cpp
-  gui/guiButtonImage.cpp
-  gui/guiButtonItemImage.cpp
-  gui/guiEditBox.cpp
-  gui/guiEditBoxWithScrollbar.cpp
-  gui/guiEngine.cpp
-  gui/guiFormSpecMenu.cpp
-  gui/guiChatConsole.cpp
-  gui/guiInventoryList.cpp
-  gui/guiItemImage.cpp
-  gui/guiKeyChangeMenu.cpp
-  gui/guiPasswordChange.cpp
-  gui/guiPathSelectMenu.cpp
-  gui/guiScene.cpp
-  gui/guiScrollBar.cpp
-  gui/guiScrollContainer.cpp
-  gui/guiSkin.cpp
-  gui/guiTable.cpp
-  gui/guiHyperText.cpp
-  gui/guiVolumeChange.cpp
-  gui/modalMenu.cpp
-  gui/profilergraph.cpp
-  irrlicht_changes/static_text.cpp
-  irrlicht_changes/CGUITTFont.cpp
-  network/clientopcodes.cpp
-  network/clientpackethandler.cpp
-  main.cpp
-  script/cpp_api/s_client.cpp
-  script/cpp_api/s_mainmenu.cpp
-  script/lua_api/l_camera.cpp
-  script/lua_api/l_client.cpp
-  script/lua_api/l_localplayer.cpp
-  script/lua_api/l_mainmenu.cpp
-  script/lua_api/l_minimap.cpp
-  script/lua_api/l_particles_local.cpp
-  script/lua_api/l_sound.cpp
-  script/scripting_client.cpp
-  script/scripting_mainmenu.cpp
+target_sources(minetest
+  PRIVATE
+    main.cpp
 )
 
 target_include_directories(minetest

@@ -1,0 +1,19 @@
+target_sources(common
+  PRIVATE
+    cavegen.cpp
+    dungeongen.cpp
+    mapgen.cpp
+    mapgen_carpathian.cpp
+    mapgen_flat.cpp
+    mapgen_fractal.cpp
+    mapgen_singlenode.cpp
+    mapgen_v5.cpp
+    mapgen_v6.cpp
+    mapgen_v7.cpp
+    mapgen_valleys.cpp
+    mg_biome.cpp
+    mg_decoration.cpp
+    mg_ore.cpp
+    mg_schematic.cpp
+    treegen.cpp
+)

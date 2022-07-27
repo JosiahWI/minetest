@@ -1,0 +1,10 @@
+target_sources(common
+  PRIVATE
+    database.cpp
+    database-dummy.cpp
+    database-files.cpp
+    database-leveldb.cpp
+    database-postgresql.cpp
+    database-redis.cpp
+    database-sqlite3.cpp
+)

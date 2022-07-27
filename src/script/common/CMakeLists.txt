@@ -1,0 +1,9 @@
+target_sources(common
+  PRIVATE
+    c_content.cpp
+    c_converter.cpp
+    c_internal.cpp
+    c_packer.cpp
+    c_types.cpp
+    helper.cpp
+)

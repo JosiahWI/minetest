@@ -1,0 +1,28 @@
+target_sources(minetest
+  PRIVATE
+    guiAnimatedImage.cpp
+    guiBackgroundImage.cpp
+    guiBox.cpp
+    guiButton.cpp
+    guiButtonImage.cpp
+    guiButtonItemImage.cpp
+    guiEditBox.cpp
+    guiEditBoxWithScrollbar.cpp
+    guiEngine.cpp
+    guiFormSpecMenu.cpp
+    guiChatConsole.cpp
+    guiInventoryList.cpp
+    guiItemImage.cpp
+    guiKeyChangeMenu.cpp
+    guiPasswordChange.cpp
+    guiPathSelectMenu.cpp
+    guiScene.cpp
+    guiScrollBar.cpp
+    guiScrollContainer.cpp
+    guiSkin.cpp
+    guiTable.cpp
+    guiHyperText.cpp
+    guiVolumeChange.cpp
+    modalMenu.cpp
+    profilergraph.cpp
+)

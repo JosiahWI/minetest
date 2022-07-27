@@ -1,0 +1,11 @@
+target_sources(minetest
+  PRIVATE
+    anaglyph.cpp
+    core.cpp
+    factory.cpp
+    interlaced.cpp
+    pageflip.cpp
+    plain.cpp
+    sidebyside.cpp
+    stereo.cpp
+)

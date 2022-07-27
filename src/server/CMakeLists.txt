@@ -1,0 +1,10 @@
+target_sources(common
+  PRIVATE
+    activeobjectmgr.cpp
+    luaentity_sao.cpp
+    mods.cpp
+    player_sao.cpp
+    serveractiveobject.cpp
+    serverinventorymgr.cpp
+    unit_sao.cpp
+)

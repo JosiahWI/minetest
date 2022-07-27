@@ -1,0 +1,21 @@
+target_sources(common
+  PRIVATE
+    s_async.cpp
+    s_base.cpp
+    s_entity.cpp
+    s_env.cpp
+    s_inventory.cpp
+    s_item.cpp
+    s_modchannels.cpp
+    s_node.cpp
+    s_nodemeta.cpp
+    s_player.cpp
+    s_security.cpp
+    s_server.cpp
+)
+
+target_sources(minetest
+  PRIVATE
+    s_client.cpp
+    s_mainmenu.cpp
+)
