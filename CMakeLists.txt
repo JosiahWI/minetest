@@ -17,7 +17,7 @@ option(USE_REDIS "" OFF)
 
 add_compile_options(
   "$<$<CXX_COMPILER_ID:GNU>:-Wall;-Wshadow;-Wnon-virtual-dtor;-pedantic>"
-  "$<$<CXX_COMPILER_ID:Clang>:-Weverything>"
+  "$<$<CXX_COMPILER_ID:Clang>:-Weverything;-Wno-c++90-compat>"
   "$<$<CXX_COMPILER_ID:MSVC>:/permissive;/W4;/w14640>"
 )
 
