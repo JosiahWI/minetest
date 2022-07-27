@@ -23,8 +23,11 @@ endif()
 if(NOT USE_LUAJIT)
 	message(STATUS "LuaJIT not found, using bundled Lua.")
 	set(LUA_LIBRARY lua)
-	set(LUA_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/lib/lua/src)
-	add_subdirectory(lib/lua)
+        set(LUA_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/lib/lua/src)
+	add_subdirectory(
+          "${PROJECT_SOURCE_DIR}/lib/lua"
+          "${PROJECT_BINARY_DIR}/lib/lua"
+        )
 endif()
 
 if(NOT TARGET lua::lua)

@@ -18,7 +18,10 @@ if(NOT USE_SYSTEM_GMP)
 	message(STATUS "Using bundled mini-gmp library.")
 	set(GMP_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/lib/gmp)
 	set(GMP_LIBRARY gmp)
-	add_subdirectory(lib/gmp)
+	add_subdirectory(
+          "${PROJECT_SOURCE_DIR}/lib/gmp"
+          "${PROJECT_BINARY_DIR}/lib/gmp"
+        )
 endif()
 
 include(FindPackageHandleStandardArgs)
