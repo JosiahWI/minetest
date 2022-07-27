@@ -221,7 +221,7 @@ if(USE_SOUND)
   find_package(OpenAlTarget REQUIRED)
 endif()
 
-add_executable(minetest
+add_executable(minetest WIN32
   client/activeobjectmgr.cpp
   client/camera.cpp
   client/client.cpp
