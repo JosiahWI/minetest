@@ -1,3 +1,7 @@
 add_library(jsoncpp STATIC jsoncpp.cpp)
-target_link_libraries(jsoncpp)
+add_library(jsoncpp::jsoncpp ALIAS jsoncpp)
 
+target_compile_features(jsoncpp
+  PUBLIC
+    cxx_std_11
+)
