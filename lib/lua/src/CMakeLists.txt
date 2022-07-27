@@ -34,7 +34,19 @@ set(LUA_CORE_SRC
 
 # Lua library
 add_library(lua STATIC ${LUA_CORE_SRC})
-target_link_libraries(lua ${LIBS})
+add_library(lua::lua ALIAS lua)
+
+target_include_directories(lua
+  PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}
+)
+
+target_link_libraries(lua
+  PRIVATE
+    ${LIBS}
+    ${CMAKE_DL_LIBS}
+)
+
 set_target_properties(lua PROPERTIES
 	VERSION ${LUA_VERSION}
 	CLEAN_DIRECT_OUTPUT 1
