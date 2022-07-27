@@ -207,6 +207,11 @@ target_link_libraries(common
     lua::lua
 )
 
+target_compile_features(common
+  PUBLIC
+    cxx_std_14
+)
+
 add_subdirectory(benchmark)
 add_subdirectory(unittest)
 
@@ -323,6 +328,11 @@ target_link_libraries(minetest
     $<$<BOOL:FALSE>:minetest::tests>
     $<$<BOOL:FALSE>:minetest::client_tests>
     $<$<BOOL:USE_SOUND>:OpenAl::OpenAl>
+)
+
+target_compile_features(minetest
+  PRIVATE
+    cxx_std_14
 )
 
 configure_file(
