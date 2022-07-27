@@ -1,55 +1,60 @@
-set (UNITTEST_SRCS
-	${CMAKE_CURRENT_SOURCE_DIR}/test.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/test_address.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/test_authdatabase.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/test_activeobject.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/test_areastore.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/test_ban.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/test_collision.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/test_compression.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/test_connection.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/test_filepath.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/test_inventory.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/test_irrptr.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/test_lua.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/test_map.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/test_map_settings_manager.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/test_mapnode.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/test_modchannels.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/test_modmetadatadatabase.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/test_nodedef.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/test_noderesolver.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/test_noise.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/test_objdef.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/test_profiler.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/test_random.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/test_schematic.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/test_serialization.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/test_serveractiveobjectmgr.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/test_server_shutdown_state.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/test_settings.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/test_socket.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/test_servermodmanager.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/test_threading.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/test_utilities.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/test_voxelarea.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/test_voxelalgorithms.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/test_voxelmanipulator.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/test_gettext.cpp
-	PARENT_SCOPE)
+if(BUILD_UNITTESTS)
+  add_library(tests OBJECT
+    test.cpp
+    test_address.cpp
+    test_authdatabase.cpp
+    test_activeobject.cpp
+    test_areastore.cpp
+    test_ban.cpp
+    test_collision.cpp
+    test_compression.cpp
+    test_connection.cpp
+    test_filepath.cpp
+    test_gettext.cpp
+    test_inventory.cpp
+    test_irrptr.cpp
+    test_lua.cpp
+    test_map.cpp
+    test_map_settings_manager.cpp
+    test_mapnode.cpp
+    test_modchannels.cpp
+    test_modmetadatadatabase.cpp
+    test_nodedef.cpp
+    test_noderesolver.cpp
+    test_noise.cpp
+    test_objdef.cpp
+    test_profiler.cpp
+    test_random.cpp
+    test_schematic.cpp
+    test_serialization.cpp
+    test_serveractiveobjectmgr.cpp
+    test_server_shutdown_state.cpp
+    test_settings.cpp
+    test_socket.cpp
+    test_servermodmanager.cpp
+    test_threading.cpp
+    test_utilities.cpp
+    test_voxelarea.cpp
+    test_voxelalgorithms.cpp
+    test_voxelmanipulator.cpp
+  )
+  add_library(minetest::tests ALIAS tests)
 
-set (UNITTEST_CLIENT_SRCS
-	${CMAKE_CURRENT_SOURCE_DIR}/test_clientactiveobjectmgr.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/test_eventmanager.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/test_gameui.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/test_keycode.cpp
-	PARENT_SCOPE)
+  target_link_libraries(tests
+    PRIVATE
+      minetest::common
+  )
 
-set (TEST_WORLDDIR ${CMAKE_CURRENT_SOURCE_DIR}/test_world)
-set (TEST_SUBGAME_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../games/devtest)
-set (TEST_MOD_PATH ${CMAKE_CURRENT_SOURCE_DIR}/test_mod)
+  add_library(client_tests OBJECT
+    test_clientactiveobjectmgr.cpp
+    test_eventmanager.cpp
+    test_gameui.cpp
+    test_keycode.cpp
+  )
+  add_library(minetest::client_tests ALIAS client_tests)
 
-configure_file(
-	"${CMAKE_CURRENT_SOURCE_DIR}/test_config.h.in"
-	"${PROJECT_BINARY_DIR}/test_config.h"
-)
+  target_link_libraries(client_tests
+    PRIVATE
+      minetest::common
+  )
+endif()

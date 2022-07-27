@@ -43,3 +43,19 @@ endif(VORBIS_FOUND)
 
 mark_as_advanced(OGG_INCLUDE_DIR VORBIS_INCLUDE_DIR)
 mark_as_advanced(OGG_LIBRARY VORBIS_LIBRARY VORBISFILE_LIBRARY)
+
+if(VORBIS_FOUND AND NOT TARGET vorbis::vorbis)
+  add_library(vorbis::vorbis INTERFACE IMPORTED)
+  target_include_directories(vorbis::vorbis
+    INTERFACE
+      "${OGG_INCLUDE_DIR}"
+      "${VORBIS_INCLUDE_DIR}"
+  )
+
+  target_link_libraries(vorbis::vorbis
+    INTERFACE
+      "${OGG_LIBRARY}"
+      "${VORBIS_LIBRARY}"
+      "${VORBISFILE_LIBRARY}"
+  )
+endif()

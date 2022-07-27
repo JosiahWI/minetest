@@ -61,6 +61,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
         #include <FindDirectory.h>
 #endif
 
+#include "cmake_config.h"
 #include "config.h"
 #include "debug.h"
 #include "filesys.h"

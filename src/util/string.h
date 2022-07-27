@@ -380,6 +380,7 @@ inline T from_string(const std::string &str)
 inline s64 stoi64(const std::string &str) { return from_string<s64>(str); }
 
 #if __cplusplus < 201103L
+#error "unacceptable"
 namespace std {
 
 /// Returns a string representing the value \p val.

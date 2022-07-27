@@ -23,3 +23,15 @@ endif()
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(Zstd DEFAULT_MSG ZSTD_LIBRARY ZSTD_INCLUDE_DIR)
 
+if(Zstd_FOUND AND NOT TARGET zstd::zstd)
+  add_library(zstd::zstd INTERFACE IMPORTED)
+  target_include_directories(zstd::zstd
+    INTERFACE
+      "${ZSTD_INCLUDE_DIR}"
+  )
+
+  target_link_libraries(zstd::zstd
+    INTERFACE
+      "${ZSTD_LIBRARY}"
+  )
+endif()

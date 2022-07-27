@@ -14,3 +14,16 @@ endif()
 
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(CURL DEFAULT_MSG CURL_LIBRARY CURL_INCLUDE_DIR)
+
+if(CURL_FOUND AND NOT TARGET CURL::libcurl)
+  add_library(CURL::libcurl INTERFACE IMPORTED)
+  target_include_directories(CURL::libcurl
+    INTERFACE
+      "${CURL_INCLUDE_DIR}"
+  )
+
+  target_link_libraries(CURL::libcurl
+    INTERFACE
+      "${CURL_LIBRARY}"
+  )
+endif()

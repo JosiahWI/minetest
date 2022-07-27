@@ -19,6 +19,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 */
 
 
+#include "cmake_config.h"
 #include "emerge.h"
 
 #include <iostream>

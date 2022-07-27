@@ -41,7 +41,10 @@
 #
 #=============================================================================
 # Copyright 2001-2014 Kitware, Inc.
-# modifications: Copyright 2015 kahrl <kahrl@gmx.net>
+# modifications:
+#
+#   Copyright 2015 kahrl <kahrl@gmx.net>
+#   Copyright 2022 Josiah VanderZee <josiah_vanderzee@medaicombb.net>
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
@@ -202,3 +205,20 @@ mark_as_advanced(
   CURSES_EXTRA_LIBRARY
   CURSES_FORM_LIBRARY
   )
+
+if(NOT TARGET ncursesw::ncursesw)
+  add_library(ncursesw::ncursesw INTERFACE IMPORTED)
+  target_include_directories(ncursesw::ncursesw
+    INTERFACE
+      "${CURSES_INCLUDE_PATH}"
+  )
+
+  target_link_libraries(ncursesw::ncursesw
+    INTERFACE
+      "${CURSES_CURSES_LIBRARY}"
+      "${CURSES_NCURSES_LIBRARY}"
+      "${CURSES_NCURSESW_LIBRARY}"
+      "${CURSES_EXTRA_LIBRARY}"
+      "${CURSES_FORM_LIBRARY}"
+  )
+endif()

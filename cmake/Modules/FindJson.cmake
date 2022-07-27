@@ -23,3 +23,16 @@ endif()
 
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(Json DEFAULT_MSG JSON_LIBRARY JSON_INCLUDE_DIR)
+
+if(Json_FOUND AND NOT TARGET json::json)
+  add_library(json::json INTERFACE IMPORTED)
+  target_include_directories(json::json
+    INTERFACE
+      "${JSON_INCLUDE_DIR}"
+  )
+
+  target_link_libraries(json::json
+    INTERFACE
+      "${JSON_LIBRARY}"
+  )
+endif()

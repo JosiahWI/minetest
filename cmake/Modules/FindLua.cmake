@@ -26,3 +26,16 @@ if(NOT USE_LUAJIT)
 	set(LUA_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/lib/lua/src)
 	add_subdirectory(lib/lua)
 endif()
+
+if(NOT TARGET lua::lua)
+  add_library(lua::lua INTERFACE IMPORTED)
+  target_include_directories(lua::lua
+    INTERFACE
+      "${LUA_INCLUDE_DIR}"
+  )
+
+  target_link_libraries(lua::lua
+    INTERFACE
+      "${LUA_LIBRARY}"
+  )
+endif()

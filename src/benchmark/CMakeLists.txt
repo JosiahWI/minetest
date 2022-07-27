@@ -1,7 +1,12 @@
-set (BENCHMARK_SRCS
-	${CMAKE_CURRENT_SOURCE_DIR}/benchmark.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/benchmark_serialize.cpp
-	PARENT_SCOPE)
+if(BUILD_BENCHMARKS)
+  add_library(benchmarks OBJECT
+    benchmark.cpp
+    benchmark_serialize.cpp
+  )
+  add_library(minetest::benchmarks ALIAS benchmarks)
 
-set (BENCHMARK_CLIENT_SRCS
-	PARENT_SCOPE)
+  target_link_libraries(benchmarks
+    PRIVATE
+      minetest::common
+  )
+endif()

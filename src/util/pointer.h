@@ -168,7 +168,7 @@ public:
 		else
 			data = nullptr;
 		refcount = new unsigned int;
-		memset(data,0,sizeof(T)*m_size);
+                std::memset(data,0,sizeof(T)*m_size);
 		(*refcount) = 1;
 	}
 	SharedBuffer(const SharedBuffer &buffer)
