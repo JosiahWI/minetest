@@ -9,7 +9,6 @@ project(minetest
 
 option(USE_CURL "Whether to use the Curl library." ON)
 option(USE_LEVELDB "" OFF)
-option(USE_LUAJIT "" ON)
 option(USE_POSTGRESQL "" OFF)
 option(USE_PROMETHEUS "" OFF)
 option(USE_SOUND "Whether to use sound." ON)
