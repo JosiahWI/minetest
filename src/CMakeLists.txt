@@ -1,9 +1,14 @@
-find_package(Bit REQUIRED)
+find_package(Lua REQUIRED)
+
+add_subdirectory(
+  "${PROJECT_SOURCE_DIR}/lib/bitop"
+  "${PROJECT_BINARY_DIR}/lib/bitop"
+)
+
 find_package(CURL REQUIRED)
 find_package(GMP REQUIRED)
 find_package(IrrlichtMt REQUIRED)
 find_package(Json REQUIRED)
-find_package(Lua REQUIRED)
 find_package(Ncursesw REQUIRED)
 find_package(SQLite3 REQUIRED)
 find_package(Threads REQUIRED)
@@ -188,7 +193,7 @@ target_include_directories(common
 
 target_link_libraries(common
   PRIVATE
-    bit::bit
+    bitop::bitop
     $<$<BOOL:USE_CURL>:CURL::libcurl>
     GMP::GMP
     ncursesw::ncursesw
