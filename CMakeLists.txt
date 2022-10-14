@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
+# add a comment
 
 # Set policies up to 3.9 since we want to enable the IPO option
 if(${CMAKE_VERSION} VERSION_LESS 3.9)
