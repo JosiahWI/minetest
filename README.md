@@ -2,6 +2,7 @@ Minetest
 ========
 
 ![Build Status](https://github.com/minetest/minetest/workflows/build/badge.svg)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/7d21d01b18e941e1bd229c5247f8a6f8)](https://app.codacy.com/gh/JosiahWI/minetest?utm_source=github.com&utm_medium=referral&utm_content=JosiahWI/minetest&utm_campaign=Badge_Grade_Settings)
 [![Translation status](https://hosted.weblate.org/widgets/minetest/-/svg-badge.svg)](https://hosted.weblate.org/engage/minetest/?utm_source=widget)
 [![License](https://img.shields.io/badge/license-LGPLv2.1%2B-blue.svg)](https://www.gnu.org/licenses/old-licenses/lgpl-2.1.en.html)
 
