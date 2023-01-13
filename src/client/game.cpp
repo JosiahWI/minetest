@@ -1025,6 +1025,7 @@ private:
 };
 
 Game::Game() :
+	zmqclient(context, zmqpp::socket_type::request),
 	m_chat_log_buf(g_logger),
 	m_game_ui(new GameUI())
 {
