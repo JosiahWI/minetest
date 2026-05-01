@@ -727,7 +727,7 @@ collisionMoveResult KineticObject::collideWith(Collision collision,
 		} else {
 			this->velocity.Z = 0.f;
 			// avoid colliding in the next interaction
-			this->accel.Z = 0;
+			this->accel.Z = 0.f;
 		}
 	}
 
