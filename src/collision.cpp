@@ -111,6 +111,8 @@ struct KineticObject
 
 	bool collideY(f32 bounce);
 
+	void stopInPlace();
+
 	void jerkUpwards(float dy);
 };
 
@@ -516,7 +518,7 @@ collisionMoveResult MovementContext::collideMove(Environment *env, IGameDef *gam
 	// solely on loaded CONTENT_IGNORE nodes, no matter where they come from.
 	const core::aabbox3d<s16> range{collider->getMovementRange(this->remaining_dtime)};
 	if (!add_area_node_boxes(range.MinEdge, range.MaxEdge, gamedef, env, this->cinfo)) {
-		collider->velocity = v3f();
+		collider->stopInPlace();
 		return collisionMoveResult{};
 	}
 
@@ -543,6 +545,11 @@ core::aabbox3d<s16> KineticObject::getMovementRange(f32 dtime) const
 	v3s16 min = floatToInt(minpos_f + this->collisionbox.MinEdge, BS) - v3s16(1, 1, 1);
 	v3s16 max = floatToInt(maxpos_f + this->collisionbox.MaxEdge, BS) + v3s16(1, 1, 1);
 	return core::aabbox3d<s16>{min, max};
+}
+
+void KineticObject::stopInPlace()
+{
+	this->velocity = v3f();
 }
 
 collisionMoveResult MovementContext::simulateFor(KineticObject *collider, f32 stepheight)
