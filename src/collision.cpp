@@ -71,29 +71,6 @@ struct Collision
 	CollisionAxis axis{COLLISION_AXIS_NONE};
 };
 
-struct KineticObject;
-
-	struct MovingBox
-	{
-		aabb3f box;
-		v3f velocity;
-	};
-
-class MovementContext
-{
-public:
-	std::vector<NearbyCollisionInfo> cinfo;
-	f32 remaining_dtime;
-
-	collisionMoveResult simulateFor(
-			KineticObject *collider, f32 stepheight, StepUpMode step_up_mode);
-
-private:
-	Collision findNearestCollision(MovingBox const &movingbox);
-
-	bool shouldStepUp(MovingBox const &movingbox, Collision collision, f32 stepheight);
-};
-
 struct KineticObject
 {
 	aabb3f collisionbox;
@@ -109,9 +86,29 @@ struct KineticObject
 	collisionMoveResult collideWith(Collision collision,
 			NearbyCollisionInfo &nearest_info, bool step_up,
 			StepUpMode step_up_mode);
+};
 
-	void stepUpStairs(std::vector<NearbyCollisionInfo> const &cinfo,
-			collisionMoveResult &result);
+class MovementContext
+{
+public:
+	std::vector<NearbyCollisionInfo> cinfo;
+	f32 remaining_dtime;
+
+	collisionMoveResult simulateFor(
+			KineticObject *collider, f32 stepheight, StepUpMode step_up_mode);
+
+private:
+	struct MovingBox
+	{
+		aabb3f box;
+		v3f velocity;
+	};
+
+	Collision findNearestCollision(MovingBox const &movingbox);
+
+	bool shouldStepUp(MovingBox const &movingbox, Collision collision, f32 stepheight);
+
+	void stepUpStairs(KineticObject *collider, collisionMoveResult &result);
 };
 
 // Helper functions:
@@ -563,7 +560,7 @@ collisionMoveResult MovementContext::simulateFor(
 		}
 	}
 
-	collider->stepUpStairs(this->cinfo, result);
+	this->stepUpStairs(collider, result);
 	result.collides = !result.collisions.empty();
 
 	return result;
@@ -732,16 +729,15 @@ collisionMoveResult KineticObject::collideWith(Collision collision,
 	return result;
 }
 
-void KineticObject::stepUpStairs(
-		std::vector<NearbyCollisionInfo> const &cinfo, collisionMoveResult &result)
+void MovementContext::stepUpStairs(KineticObject *collider, collisionMoveResult &result)
 {
 	/*
 		Final touches: Check if standing on ground, step up stairs.
 	*/
-	aabb3f box = this->collisionbox;
-	box.MinEdge += this->pos;
-	box.MaxEdge += this->pos;
-	for (auto const &box_info : cinfo) {
+	aabb3f box = collider->collisionbox;
+	box.MinEdge += collider->pos;
+	box.MaxEdge += collider->pos;
+	for (auto const &box_info : this->cinfo) {
 		aabb3f const &cbox = box_info.box;
 
 		/*
@@ -755,10 +751,10 @@ void KineticObject::stepUpStairs(
 		if (cbox.MaxEdge.X > box.MinEdge.X && cbox.MinEdge.X < box.MaxEdge.X &&
 				cbox.MaxEdge.Z > box.MinEdge.Z && cbox.MinEdge.Z < box.MaxEdge.Z) {
 			if (box_info.is_step_up) {
-				this->pos.Y += cbox.MaxEdge.Y - box.MinEdge.Y;
-				box = this->collisionbox;
-				box.MinEdge += this->pos;
-				box.MaxEdge += this->pos;
+				collider->pos.Y += cbox.MaxEdge.Y - box.MinEdge.Y;
+				box = collider->collisionbox;
+				box.MinEdge += collider->pos;
+				box.MaxEdge += collider->pos;
 			}
 			if (std::fabs(cbox.MaxEdge.Y - box.MinEdge.Y) < 0.05f) {
 				// This is code is technically only required if `box_info.is_step_up == true`.
